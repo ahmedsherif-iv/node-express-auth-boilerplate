@@ -15,17 +15,19 @@ const UserSchema = new Schema({
         required: [true, 'Please enter an email'],
         unique: true,
         lowercase: true,
-        validate: [isEmail, 'Please enter a valid email']
     },
     password: {
         type: String,
-        required: [true, 'Please enter a password'],
-        minlength: [6, 'Minimum password length is 6 characters'],
+        // required: [true, 'Please enter a password'],
+        // minlength: [6, 'Minimum password length is 6 characters'],
     },
-    thumbnail: {
+    picture: {
         type: String,
-    }
-});
+    },
+    googleId: {
+        type: String
+    },
+}, { timestamps: true });
 
 const User = mongoose.model('user', UserSchema);
 
