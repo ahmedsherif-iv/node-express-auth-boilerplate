@@ -24,9 +24,6 @@ const UserSchema = new Schema({
     picture: {
         type: String,
     },
-    googleId: {
-        type: String
-    },
 }, { timestamps: true });
 
 const User = mongoose.model('user', UserSchema);

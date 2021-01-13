@@ -1,18 +1,20 @@
 const { Router } = require('express');
 const { authController } = require('../../controllers');
 const passport = require('passport');
+const { celebrate } = require('celebrate');
+const { opts, userValidation } = require('../../validations');
 
 const router = Router();
 
 // @route POST api/auth/login
 // @desc Login user
 // @access Public
-router.post('/login', authController.loginWithEmailandPassword);
+router.post('/login', celebrate(userValidation.loginSchema, opts), authController.loginWithEmailandPassword);
 
 // @route POST api/auth/register
 // @desc Register user
 // @access Public
-router.post('/register', authController.registerUser);
+router.post('/register', celebrate(userValidation.registerSchema, opts), authController.registerUser);
 
 
 // @route GET api/auth/logout

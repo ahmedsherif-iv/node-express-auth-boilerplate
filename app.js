@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 const config = require('./config');
+const { validationMiddleware } = require('./middlewares');
 
 require('./config/passport-config');
 
@@ -38,6 +39,12 @@ app.get('/api/items', passport.authenticate('jwt', { session: false }), (req, re
     Item.find().then((items) => res.send(items));
 })
 /////////////////
+
+app.use(validationMiddleware.handleValidationError);
+
+process.on('uncaughtException', (err) => {
+    console.log(err);
+})
 
 const PORT = config.PORT || 5000;
 app.listen(PORT, () => console.log(`server running on PORT: ${PORT}`));
