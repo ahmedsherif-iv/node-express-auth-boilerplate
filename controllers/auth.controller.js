@@ -5,14 +5,14 @@ module.exports.registerUser = async (req, res) => {
     try {
         const user = await userService.registerUser(req.body);
         const token = tokenService.createToken({ id: user.id, email: user.email });
-        res.status(201).send({ status: 'success', token });
+        res.status(201).send({ user, token });
     } catch (error) {
         console.error(error.message);
-        res.status(400).send({ msg: error.message });
+        res.status(400).send({ messsage: error.message });
     }
 }
 
-module.exports.loginWithEmailandPassword = (req, res, next) => {
+module.exports.loginWithEmailAndPassword = (req, res, next) => {
     passport.authenticate('local', { session: false }, (error, user, info) => {
         if (error) { return res.status(500).send({ message: error.message }); }
 
@@ -27,19 +27,14 @@ module.exports.loginWithEmailandPassword = (req, res, next) => {
 }
 
 module.exports.loginWithGoogle = passport.authenticate('google', {
-    scope: ['profile'],
+    scope: ['profile', 'email'],
 })
-
-module.exports.googleCallback = (req, res) => {
-    const token = tokenService.createToken({ id: req.user.id, email: req.user.email });
-    res.send({ user: req.user, token });
-}
 
 module.exports.loginWithFacebook = passport.authenticate('facebook', {
     scope: ['public_profile', 'email']
 })
 
-module.exports.facebookCallback = (req, res) => {
+module.exports.authThirdPartyCallback = (req, res) => {
     const token = tokenService.createToken({ id: req.user.id, email: req.user.email });
     res.send({ user: req.user, token });
 }

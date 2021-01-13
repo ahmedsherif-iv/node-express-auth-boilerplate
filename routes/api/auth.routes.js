@@ -9,7 +9,7 @@ const router = Router();
 // @route POST api/auth/login
 // @desc Login user
 // @access Public
-router.post('/login', celebrate(userValidation.loginSchema, opts), authController.loginWithEmailandPassword);
+router.post('/login', celebrate(userValidation.loginSchema, opts), authController.loginWithEmailAndPassword);
 
 // @route POST api/auth/register
 // @desc Register user
@@ -30,7 +30,7 @@ router.get('/google', authController.loginWithGoogle);
 // @route GET api/auth/google/callback
 // @desc Callback route for google to redirect to
 // @access Public
-router.get('/google/callback', passport.authenticate('google'), authController.googleCallback);
+router.get('/google/callback', passport.authenticate('google'), authController.authThirdPartyCallback);
 
 // @route GET api/auth/facebook
 // @desc Login with facebook
@@ -40,6 +40,6 @@ router.get('/facebook', authController.loginWithFacebook);
 // @route GET api/auth/facebook/callback
 // @desc Callback route for facebook to redirect to
 // @access Public
-router.get('/facebook/callback', passport.authenticate('facebook'), authController.facebookCallback);
+router.get('/facebook/callback', passport.authenticate('facebook'), authController.authThirdPartyCallback);
 
 module.exports = router;

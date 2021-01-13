@@ -17,11 +17,12 @@ const registerUser = async (userData) => {
     userData.password = await bcrypt.hash(userData.password, salt);
 
     const newUser = await User.create(userData);
+    newUser.password = undefined;
     return newUser;
 }
 
 
-const loginWithEmailandPassword = async (email, password) => {
+const loginWithEmailAndPassword = async (email, password) => {
     const user = await User.findOne({ email });
     if (user) {
         const auth = await bcrypt.compare(password, user.password);
@@ -46,6 +47,6 @@ const registerWithThirdParty = async (userData) => {
 module.exports = {
     getUserById,
     registerUser,
-    loginWithEmailandPassword,
+    loginWithEmailAndPassword,
     registerWithThirdParty,
 }

@@ -40,10 +40,11 @@ app.get('/api/items', passport.authenticate('jwt', { session: false }), (req, re
 })
 /////////////////
 
+// handle celebration errors
 app.use(validationMiddleware.handleValidationError);
 
-process.on('uncaughtException', (err) => {
-    console.log(err);
+process.on('uncaughtException', (error) => {
+    console.log(error);
 })
 
 const PORT = config.PORT || 5000;

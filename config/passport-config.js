@@ -25,7 +25,7 @@ passport.use(new LocalStrategy(
         passwordField: 'password'
     }, async (email, password, done) => {
         try {
-            const user = await userService.loginWithEmailandPassword(email, password);
+            const user = await userService.loginWithEmailAndPassword(email, password);
             return done(null, user);
         } catch (error) {
             console.error(error.message);
