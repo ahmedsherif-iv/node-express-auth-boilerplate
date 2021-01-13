@@ -35,6 +35,15 @@ module.exports.googleCallback = (req, res) => {
     res.send({ user: req.user, token });
 }
 
+module.exports.loginWithFacebook = passport.authenticate('facebook', {
+    scope: ['public_profile', 'email']
+})
+
+module.exports.facebookCallback = (req, res) => {
+    const token = tokenService.createToken({ id: req.user.id, email: req.user.email });
+    res.send({ user: req.user, token });
+}
+
 module.exports.logout = async (req, res) => {
     req.logout();
     res.status(200).send({ message: 'logout successful' });
