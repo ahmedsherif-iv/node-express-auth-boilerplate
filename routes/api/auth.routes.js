@@ -30,4 +30,14 @@ router.get('/google', authController.loginWithGoogle);
 // @access Public
 router.get('/google/callback', passport.authenticate('google'), authController.googleCallback);
 
+// @route GET api/auth/facebook
+// @desc Login with facebook
+// @access Public
+router.get('/facebook', authController.loginWithFacebook);
+
+// @route GET api/auth/facebook/callback
+// @desc Callback route for facebook to redirect to
+// @access Public
+router.get('/facebook/callback', passport.authenticate('facebook'), authController.facebookCallback);
+
 module.exports = router;

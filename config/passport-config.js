@@ -1,5 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
@@ -73,7 +74,7 @@ passport.use(
                     email: profile._json.email,
                     picture: profile._json.picture,
                 };
-                const user = await userService.registerWithGoogle(userData);
+                const user = await userService.registerWithThirdParty(userData);
                 done(null, user);
             } catch (error) {
                 console.log(error.message);
@@ -81,3 +82,25 @@ passport.use(
             }
         })
 );
+
+passport.use(new FacebookStrategy({
+    clientID: config.facebook.appID,
+    clientSecret: config.facebook.appSecret,
+    callbackURL: 'http://localhost:5000/api/auth/facebook/callback',
+    profileFields: ['id', 'emails', 'name'],
+},
+    async (accessToken, refreshToken, profile, done) => {
+        try {
+            const userData = {
+                firstName: profile._json.first_name.toLowerCase(),
+                lastName: profile._json.last_name.toLowerCase(),
+                email: profile._json.email,
+            };
+            const user = await userService.registerWithThirdParty(userData);
+            done(null, user);
+        } catch (error) {
+            console.log(error.message);
+            done(null, false);
+        }
+    }
+));

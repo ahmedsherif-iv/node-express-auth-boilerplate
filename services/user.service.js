@@ -34,8 +34,8 @@ const loginWithEmailandPassword = async (email, password) => {
     throw new Error('email not registered');
 }
 
-const registerWithGoogle = async (userData) => {
-    const user = await User.findOne({ email: userData.email });
+const registerWithThirdParty = async (userData) => {
+    const user = await User.findOne({ email: userData.email }).select('-password');
     if (user) {
         return user;
     }
@@ -47,5 +47,5 @@ module.exports = {
     getUserById,
     registerUser,
     loginWithEmailandPassword,
-    registerWithGoogle,
+    registerWithThirdParty,
 }
