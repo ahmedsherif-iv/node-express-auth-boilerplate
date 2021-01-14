@@ -11,6 +11,7 @@ module.exports = {
     jwt: {
         JWT_SECRET: process.env.JWT_SECRET,
         JWT_MAX_AGE: process.env.JWT_MAX_AGE,
+        JWT_EMAIL_SECRET: process.env.JWT_EMAIL_SECRET,
     },
     google: {
         clientID: process.env.GOOGLE_CLIENT_ID,

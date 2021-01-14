@@ -21,6 +21,13 @@ const registerUser = async (userData) => {
     return newUser;
 }
 
+const updateUserById = async (id, userData) => {
+    await User.findByIdAndUpdate(id, userData);
+    // await User.updateOne(
+    //     { _id: id },
+    //     userData
+    // );
+}
 
 const loginWithEmailAndPassword = async (email, password) => {
     const user = await User.findOne({ email });
@@ -49,4 +56,5 @@ module.exports = {
     registerUser,
     loginWithEmailAndPassword,
     registerWithThirdParty,
+    updateUserById,
 }

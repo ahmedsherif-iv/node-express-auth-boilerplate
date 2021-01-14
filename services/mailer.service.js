@@ -42,7 +42,7 @@ const sendMail = async (to, subject, templateName, data) => {
         html: compiledTemplate(data),
         attachments: attachments
     };
-    let info = await transporter.sendMail(mailOptions);
+    let info = transporter.sendMail(mailOptions);
     transporter.close();
     return info;
 }

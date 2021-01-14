@@ -3,16 +3,21 @@ const config = require('../config');
 
 
 const maxAge = config.jwt.JWT_MAX_AGE || 365 * 24 * 60 * 60; //3 * 24 * 60 * 60;
-const secret = config.jwt.JWT_SECRET
+const jwtSecret = config.jwt.JWT_SECRET;
 
 
 // create json web token
-const createToken = (payload) => {
+const createToken = (payload, secret = jwtSecret, expiresIn = maxAge) => {
     return jwt.sign(payload, secret, {
-        expiresIn: maxAge
+        expiresIn: expiresIn
     });
 };
 
+const verifyToken = (token, secret = jwtSecret) => {
+    return jwt.verify(token, secret);
+}
+
 module.exports = {
     createToken,
+    verifyToken,
 }

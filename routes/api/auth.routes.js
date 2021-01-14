@@ -3,6 +3,7 @@ const { authController } = require('../../controllers');
 const passport = require('passport');
 const { celebrate } = require('celebrate');
 const { opts, userValidation } = require('../../validations');
+const { userService } = require('../../services');
 
 const router = Router();
 
@@ -16,6 +17,7 @@ router.post('/login', celebrate(userValidation.loginSchema, opts), authControlle
 // @access Public
 router.post('/register', celebrate(userValidation.registerSchema, opts), authController.registerUser);
 
+router.get('/confirmation/:token', authController.confirmEmail);
 
 // @route GET api/auth/logout
 // @desc Logout user

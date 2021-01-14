@@ -18,11 +18,13 @@ const UserSchema = new Schema({
     },
     password: {
         type: String,
-        // required: [true, 'Please enter a password'],
-        // minlength: [6, 'Minimum password length is 6 characters'],
     },
     picture: {
         type: String,
+    },
+    isConfirmed: {
+        type: Boolean,
+        default: false,
     },
 }, { timestamps: true });
 
