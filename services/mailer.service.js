@@ -1,10 +1,11 @@
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 const fs = require('fs');
+const config = require('../config');
 
-const service = 'yahoo';
-const email = 'ahmed.asa146@yahoo.com';
-const password = '0102347791';
+const service = config.email.service;
+const email = config.email.user;
+const password = config.email.password;
 
 const transporter = nodemailer.createTransport({
     service: service,

@@ -20,4 +20,9 @@ module.exports = {
         appID: process.env.FACEBOOK_APP_ID,
         appSecret: process.env.FACEBOOK_APP_SECRET,
     },
+    email: {
+        user: process.env.EMAIL_USER,
+        password: process.env.EMAIL_PASSWORD,
+        service: process.env.EMAIL_SERVICE,
+    },
 };
