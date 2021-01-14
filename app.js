@@ -14,6 +14,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 
+// set static folders
+app.use(express.static('public'));
+app.use(express.static('templates'));
+
 // initialize passport
 app.use(passport.initialize());
 // app.use(passport.session());
