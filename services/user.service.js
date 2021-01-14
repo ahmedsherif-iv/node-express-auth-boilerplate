@@ -7,6 +7,12 @@ const getUserById = async (id) => {
     return user;
 }
 
+const getUserByOpts = async (opts) => {
+    const user = await User.findOne(opts).select('-password');
+    // console.log('user', user);
+    return user;
+}
+
 const registerUser = async (userData) => {
     const user = await User.findOne({ email: userData.email });
     if (user) {
@@ -22,7 +28,11 @@ const registerUser = async (userData) => {
 }
 
 const updateUserById = async (id, userData) => {
-    await User.findByIdAndUpdate(id, userData);
+    if (userData.password) {
+        const salt = await bcrypt.genSalt();
+        userData.password = await bcrypt.hash(userData.password, salt);
+    }
+    return await User.findByIdAndUpdate(id, userData);
     // await User.updateOne(
     //     { _id: id },
     //     userData
@@ -53,6 +63,7 @@ const registerWithThirdParty = async (userData) => {
 
 module.exports = {
     getUserById,
+    getUserByOpts,
     registerUser,
     loginWithEmailAndPassword,
     registerWithThirdParty,

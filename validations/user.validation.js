@@ -1,4 +1,6 @@
-const { Joi, Segments } = require('celebrate');
+const { Joi, Segments, CelebrateError } = require('celebrate');
+
+const passwordMessage = 'password must contain at least one uppercase letter, one lowercase letter, and one numeric digit';
 
 const loginSchema = {
     [Segments.BODY]: Joi.object().keys({
@@ -16,13 +18,29 @@ const registerSchema = {
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
         email: Joi.string().email().required(),
-        password: Joi.string().required().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,30}$/),
+        password: Joi.string().required().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,30}$/).message(passwordMessage),
         picture: Joi.string(),
         // role: Joi.string().default('admin')
     }),
 }
 
+const sendRequestEmailSchema = {
+    [Segments.BODY]: Joi.object().keys({
+        email: Joi.string().email().required(),
+    }),
+}
+
+const resetPasswordSchema = {
+    [Segments.BODY]: Joi.object().keys({
+        password: Joi.string().required().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,30}$/).message(passwordMessage),
+    }),
+}
+
+
+
 module.exports = {
     loginSchema,
     registerSchema,
+    sendRequestEmailSchema,
+    resetPasswordSchema,
 }

@@ -8,12 +8,12 @@ const config = require('./index');
 const { userService } = require('../services');
 
 passport.serializeUser((user, done) => {
-    done(null, user.id); // first param for error
+    done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-    User.findById(id).then((user) => {
-        done(null, user); // first param for error
+    userService.getUserById(id).then((user) => {
+        done(null, user);
     });
 });
 

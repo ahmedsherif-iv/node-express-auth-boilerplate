@@ -17,7 +17,25 @@ router.post('/login', celebrate(userValidation.loginSchema, opts), authControlle
 // @access Public
 router.post('/register', celebrate(userValidation.registerSchema, opts), authController.registerUser);
 
+// @route GET api/auth/confirmation/get-activation-email
+// @desc Resend confirmation email
+// @access Public
+router.get('/get-activation-email', celebrate(userValidation.sendRequestEmailSchema, opts), authController.sendConfirmEmail);
+
+// @route GET api/auth/confirmation/:token
+// @desc Confirm user's email
+// @access Public
 router.get('/confirmation/:token', authController.confirmEmail);
+
+// @route POST api/auth/password-reset/get-code
+// @desc Reset password of user
+// @access Public
+router.post('/password-reset/get-code', celebrate(userValidation.sendRequestEmailSchema, opts), authController.sendResetPasswordEmail);
+
+// @route POST api/auth/password-reset/verify
+// @desc Verify and save new password of user
+// @access Public
+router.post('/password-reset/verify/:token', celebrate(userValidation.resetPasswordSchema, opts), authController.resetPassword);
 
 // @route GET api/auth/logout
 // @desc Logout user
