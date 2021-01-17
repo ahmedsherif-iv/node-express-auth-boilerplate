@@ -26,7 +26,7 @@ Set the environment variables:
 ```bash
 touch .env
 
-# open .env and modify the environment variables (if needed)
+# create .env and add the needed environment variables
 ```
 
 ## Table of Contents
