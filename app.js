@@ -58,8 +58,6 @@ mongoose.connect(db, {
 
 // set up routes
 app.use('/api', routes);
-// app.use('/api/auth', authRoutes);
-// app.use('/api/users', userRoutes);
 
 // handle celebrate errors
 app.use(validationMiddleware.handleValidationError);
