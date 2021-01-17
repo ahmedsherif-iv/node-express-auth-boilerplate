@@ -12,7 +12,7 @@ require('./config/passport-config');
 
 const app = express();
 
-// middleware
+// middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
@@ -23,7 +23,6 @@ app.use(express.static('templates'));
 
 // initialize passport
 app.use(passport.initialize());
-// app.use(passport.session());
 
 // DB config
 const db = config.mongo.MONGO_URI;
@@ -38,12 +37,8 @@ mongoose.connect(db, {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 
-// handle celebration errors
+// handle celebrate errors
 app.use(validationMiddleware.handleValidationError);
-
-process.on('uncaughtException', (error) => {
-    console.log(error);
-})
 
 const PORT = config.PORT || 5000;
 app.listen(PORT, () => console.log(`server running on PORT: ${PORT}`));

@@ -4,12 +4,11 @@
   "description": "oauth boilerplate",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app",
     "dev": "nodemon app"
   },
   "author": "Ahmed Sherif",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "celebrate": "^13.0.4",

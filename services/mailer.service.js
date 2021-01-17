@@ -15,6 +15,8 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+
+// if you want to attach an image to the ejs file uncomment the attachment lines
 const getAttachments = (templateName) => {
     switch (templateName) {
         case 'confirm-email':
@@ -33,14 +35,14 @@ const getAttachments = (templateName) => {
 const sendMail = async (to, subject, templateName, data) => {
     const template = fs.readFileSync(`./templates/${templateName}.ejs`, 'utf-8');
     const compiledTemplate = ejs.compile(template);
-    const attachments = getAttachments(templateName);
+    // const attachments = getAttachments(templateName);
 
     const mailOptions = {
         from: email,
         to: to,
         subject: subject,
         html: compiledTemplate(data),
-        attachments: attachments
+        // attachments: attachments
     };
     let info = transporter.sendMail(mailOptions);
     transporter.close();
