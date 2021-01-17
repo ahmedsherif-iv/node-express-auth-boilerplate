@@ -1,7 +1,3 @@
-# node-express-auth-boilerplate
-A boilerplate for building production-ready RESTful APIs with authentication locally, with Facebook, or google using Node.js, Express, Mongoose, and Passport
-
-
 # REST API Node.js Server Boilerplate
 
 A boilerplate/template project for quickly building REST APIs using Node.js, Express, Mongoose, and Passport.
