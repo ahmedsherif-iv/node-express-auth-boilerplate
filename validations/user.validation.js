@@ -31,7 +31,7 @@ const updateSchema = {
         email: Joi.string().email(),
         password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,30}$/).message(passwordMessage),
         picture: Joi.string(),
-        isAdmin: Joi.boolean().default(false),
+        isAdmin: Joi.boolean(),
     }),
 }
 
