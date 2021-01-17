@@ -2,6 +2,9 @@ const { userService, tokenService, mailerService } = require('../services');
 const passport = require('passport');
 const config = require('../config');
 
+// @desc Register new user
+// @route POST /api/auth/register
+// @access Public
 module.exports.registerUser = async (req, res) => {
     try {
         const user = await userService.registerUser(req.body);
@@ -15,44 +18,14 @@ module.exports.registerUser = async (req, res) => {
         mailerService.sendMail(user.email, 'Confirm Email', 'confirm-email', { url: url, name: user.firstName })
 
         res.status(201).send({ user, token });
-        // res.status(201).send('ok');
     } catch (error) {
-        console.error(error.message);
         res.status(400).send({ messsage: error.message });
     }
 }
 
-module.exports.sendConfirmEmail = async (req, res) => {
-    try {
-        const { email } = req.body;
-
-        const user = await userService.getUserByOpts({ email });
-        if (!user) {
-            return res.status(404).send({ message: 'user not found' });
-        }
-
-        const emailToken = tokenService.createToken({ id: user.id, email: user.email }, config.jwt.JWT_EMAIL_SECRET, '6h');
-
-        const baseUrl = req.protocol + "://" + req.get("host");
-        const url = baseUrl + `/api/auth/confirmation/${emailToken}`;
-
-        mailerService.sendMail(email, 'Confirm Email', 'confirm-email', { url: url, name: '' });
-        res.status(200).send({ message: 'success' });
-    } catch (error) {
-        res.status(400).send({ message: error.message });
-    }
-}
-
-module.exports.confirmEmail = async (req, res) => {
-    try {
-        const { id } = tokenService.verifyToken(req.params.token, config.jwt.JWT_EMAIL_SECRET);
-        const user = await userService.updateUserById(id, { isConfirmed: true });
-        res.status(200).send({ message: 'success' });
-    } catch (error) {
-        res.status(400).send({ message: error.message });
-    }
-}
-
+// @desc Reset password of user
+// @route POST /api/auth/password-reset/get-code
+// @access Public
 module.exports.sendResetPasswordEmail = async (req, res) => {
     try {
         const { email } = req.body;
@@ -74,6 +47,9 @@ module.exports.sendResetPasswordEmail = async (req, res) => {
     }
 }
 
+// @desc Verify and save new password of user
+// @route POST /api/auth/password-reset/verify
+// @access Public
 module.exports.resetPassword = async (req, res) => {
     try {
         const { password } = req.body;
@@ -85,6 +61,9 @@ module.exports.resetPassword = async (req, res) => {
     }
 }
 
+// @desc Auth user & get token
+// @route POST /api/auth/login
+// @access Public
 module.exports.loginWithEmailAndPassword = (req, res, next) => {
     passport.authenticate('local', { session: false }, (error, user, info) => {
         if (error) { return res.status(500).send({ message: error.message }); }
@@ -99,20 +78,25 @@ module.exports.loginWithEmailAndPassword = (req, res, next) => {
     })(req, res, next);
 }
 
+// @desc Login with google
+// @route GET /api/auth/google
+// @access Public
 module.exports.loginWithGoogle = passport.authenticate('google', {
     scope: ['profile', 'email'],
 })
 
+// @desc Login with facebook
+// @route GET /api/auth/facebook
+// @access Public
 module.exports.loginWithFacebook = passport.authenticate('facebook', {
     scope: ['public_profile', 'email']
 })
 
+// @desc Callback route for third party auth to redirect to
+// @route GET /api/auth/google/callback
+// @route GET /api/auth/facebook/callback
+// @access Public
 module.exports.authThirdPartyCallback = (req, res) => {
     const token = tokenService.createToken({ id: req.user.id, email: req.user.email });
     res.send({ user: req.user, token });
-}
-
-module.exports.logout = async (req, res) => {
-    req.logout();
-    res.status(200).send({ message: 'logout successful' });
 }

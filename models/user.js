@@ -22,6 +22,10 @@ const UserSchema = new Schema({
     picture: {
         type: String,
     },
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    },
     isConfirmed: {
         type: Boolean,
         default: false,

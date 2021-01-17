@@ -5,6 +5,9 @@ const passport = require('passport');
 const config = require('./config');
 const { validationMiddleware } = require('./middlewares');
 
+const { userRoutes, authRoutes } = require('./routes');
+
+// set up passport
 require('./config/passport-config');
 
 const app = express();
@@ -32,17 +35,8 @@ mongoose.connect(db, {
 }, () => console.log('mongodb connected'));
 
 // set up routes
-const { authRoutes } = require('./routes/api');
 app.use('/api/auth', authRoutes);
-
-////// jwt test
-const { Item } = require('./models');
-
-app.get('/api/items', passport.authenticate('jwt', { session: false }), (req, res) => {
-    console.log(req.user);
-    Item.find().then((items) => res.send(items));
-})
-/////////////////
+app.use('/api/users', userRoutes);
 
 // handle celebration errors
 app.use(validationMiddleware.handleValidationError);

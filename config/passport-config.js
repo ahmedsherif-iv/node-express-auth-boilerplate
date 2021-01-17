@@ -52,7 +52,7 @@ passport.use(
             return done(null, false);
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     })
 );
@@ -73,11 +73,12 @@ passport.use(
                     lastName: profile._json.family_name.toLowerCase(),
                     email: profile._json.email,
                     picture: profile._json.picture,
+                    isConfirmed: true,
                 };
                 const user = await userService.registerWithThirdParty(userData);
                 done(null, user);
             } catch (error) {
-                console.log(error.message);
+                console.error(error.message);
                 done(null, false);
             }
         })
@@ -95,11 +96,12 @@ passport.use(new FacebookStrategy({
                 firstName: profile._json.first_name.toLowerCase(),
                 lastName: profile._json.last_name.toLowerCase(),
                 email: profile._json.email,
+                isConfirmed: true,
             };
             const user = await userService.registerWithThirdParty(userData);
             done(null, user);
         } catch (error) {
-            console.log(error.message);
+            console.error(error.message);
             done(null, false);
         }
     }

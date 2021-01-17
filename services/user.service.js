@@ -1,16 +1,25 @@
 const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 
+const getUsers = async (id) => {
+    const users = await User.find({}).select('-password');
+    return users;
+}
+
 const getUserById = async (id) => {
     const user = await User.findById(id).select('-password');
-    // console.log('user', user);
-    return user;
+    if (user) {
+        return user;
+    }
+    throw new Error('user not found');
 }
 
 const getUserByOpts = async (opts) => {
     const user = await User.findOne(opts).select('-password');
-    // console.log('user', user);
-    return user;
+    if (user) {
+        return user;
+    }
+    throw new Error('user not found');
 }
 
 const registerUser = async (userData) => {
@@ -32,11 +41,20 @@ const updateUserById = async (id, userData) => {
         const salt = await bcrypt.genSalt();
         userData.password = await bcrypt.hash(userData.password, salt);
     }
-    return await User.findByIdAndUpdate(id, userData);
-    // await User.updateOne(
-    //     { _id: id },
-    //     userData
-    // );
+    const user = await User.findByIdAndUpdate(id, userData);
+    if (user) {
+        return user;
+    }
+    throw new Error('user not found');
+}
+
+const deleteUserById = async (id) => {
+    const user = await User.findById(id);
+    if (user) {
+        await user.remove();
+        return user;
+    }
+    throw new Error('user not found');
 }
 
 const loginWithEmailAndPassword = async (email, password) => {
@@ -62,10 +80,12 @@ const registerWithThirdParty = async (userData) => {
 }
 
 module.exports = {
+    getUsers,
     getUserById,
     getUserByOpts,
     registerUser,
     loginWithEmailAndPassword,
     registerWithThirdParty,
     updateUserById,
+    deleteUserById,
 }

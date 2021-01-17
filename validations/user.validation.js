@@ -20,7 +20,18 @@ const registerSchema = {
         email: Joi.string().email().required(),
         password: Joi.string().required().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,30}$/).message(passwordMessage),
         picture: Joi.string(),
-        // role: Joi.string().default('admin')
+        isAdmin: Joi.boolean().default(false),
+    }),
+}
+
+const updateSchema = {
+    [Segments.BODY]: Joi.object().keys({
+        firstName: Joi.string(),
+        lastName: Joi.string(),
+        email: Joi.string().email(),
+        password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,30}$/).message(passwordMessage),
+        picture: Joi.string(),
+        isAdmin: Joi.boolean().default(false),
     }),
 }
 
@@ -41,6 +52,7 @@ const resetPasswordSchema = {
 module.exports = {
     loginSchema,
     registerSchema,
+    updateSchema,
     sendRequestEmailSchema,
     resetPasswordSchema,
 }
