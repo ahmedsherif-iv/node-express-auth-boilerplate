@@ -1,13 +1,13 @@
 {
   "name": "auth-mongo-boilerplate-api",
   "version": "1.0.0",
-  "description": "oauth boilerplate",
+  "description": "express and mongo auth boilerplate",
   "main": "app.js",
   "scripts": {
-    "start": "node app",
-    "dev": "nodemon app"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
-  "author": "Ahmed Sherif",
+  "author": "Ahmed Sherif <ahmed.sherif146@outlook.com>",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
