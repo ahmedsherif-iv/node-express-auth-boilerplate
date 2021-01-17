@@ -11,7 +11,7 @@ If you would still prefer to do the installation manually, follow these steps:
 Clone the repo:
 
 ```bash
-git clone --depth 1 https://github.com/ahmedsherif-iv/node-express-auth-boilerplate.git
+git clone https://github.com/ahmedsherif-iv/node-express-auth-boilerplate.git
 cd node-express-boilerplate
 ```
 
@@ -31,12 +31,11 @@ touch .env
 
 ## Table of Contents
 
-- [Features](#features)
 - [Environment Variables](#environment-variables)
 - [Project Structure](#project-structure)
 - [Commands](#commands)
 - [Mailer Service](#mailer-service)
-- [Validation and Authentication](#validation)
+- [Validation and Authentication middlewares](#validation)
 
 
 
@@ -80,6 +79,9 @@ models\         # Mongoose models (data access layer)
 routes\         # Routes
 services\       # Business logic (service layer)
 validations\    # Request data validation schemas
+templates\      # Email templates 
+public\         # Public directory
+|--images\      # Images for email templates
 app.js          # Express app
 ```
 
