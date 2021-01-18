@@ -2,8 +2,8 @@ const { Router } = require('express');
 const { userController } = require('../controllers');
 const { celebrate } = require('celebrate');
 const { opts, userValidation } = require('../validations');
-const { authMiddleWare } = require('../middlewares');
-const { requireAuth, isAdmin } = authMiddleWare;
+const { authMiddleware } = require('../middlewares');
+const { requireAuth, isAdmin } = authMiddleware;
 
 const router = Router();
 
