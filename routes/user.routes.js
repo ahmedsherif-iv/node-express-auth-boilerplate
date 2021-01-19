@@ -15,15 +15,6 @@ router.route('/')
         celebrate(userValidation.registerSchema, opts)
     ], userController.createUser);
 
-router.route('/:id')
-    .get([requireAuth, isAdmin], userController.getUserById)
-    .delete([requireAuth, isAdmin], userController.deleteUser)
-    .put([
-        requireAuth,
-        isAdmin,
-        celebrate(userValidation.updateSchema, opts)
-    ], userController.updateUser);
-
 
 router.route('/profile')
     .get(requireAuth, userController.getUserProfile)
@@ -38,5 +29,14 @@ router.route('/get-activation-email')
 
 router.route('/confirmation/:token')
     .get(userController.confirmEmail);
+
+router.route('/:id')
+    .get([requireAuth, isAdmin], userController.getUserById)
+    .delete([requireAuth, isAdmin], userController.deleteUser)
+    .put([
+        requireAuth,
+        isAdmin,
+        celebrate(userValidation.updateSchema, opts)
+    ], userController.updateUser);
 
 module.exports = router;
