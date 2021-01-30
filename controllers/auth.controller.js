@@ -19,7 +19,7 @@ module.exports.registerUser = async (req, res) => {
 
         res.status(201).send({ user, token });
     } catch (error) {
-        res.status(400).send({ messsage: error.message });
+        res.status(400).send({ message: error.message });
     }
 }
 
