@@ -60,7 +60,7 @@ const deleteUserById = async (id) => {
 const loginWithEmailAndPassword = async (email, password) => {
     const user = await User.findOne({ email });
     if (user) {
-        const auth = await bcrypt.compare(password, user.password);
+        const auth = user.password ? await bcrypt.compare(password, user.password) : null;
         if (auth) {
             user.password = undefined;
             return user;
