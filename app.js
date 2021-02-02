@@ -41,7 +41,6 @@ else {
 
 
 // set static folders
-app.use(express.static('public'));
 app.use(express.static('templates'));
 
 // initialize passport
