@@ -38,7 +38,7 @@ passport.use(new LocalStrategy(
 const opts = {};
 // opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.jwtFromRequest = ExtractJwt.fromHeader('authorization');
-opts.secretOrKey = config.jwt.JWT_SECRET;
+opts.secretOrKey = config.jwt.secret;
 
 
 // JWT auth

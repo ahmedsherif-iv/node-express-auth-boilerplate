@@ -5,13 +5,13 @@ dotenv.config();
 module.exports = {
     PORT: process.env.PORT,
     mongo: {
-        MONGO_URI: process.env.MONGO_URI,
-        MONGO_DB_NAME: process.env.MONGO_DB_NAME,
+        url: process.env.MONGO_URI,
+        dbName: process.env.MONGO_DB_NAME,
     },
     jwt: {
-        JWT_SECRET: process.env.JWT_SECRET,
-        JWT_MAX_AGE: process.env.JWT_MAX_AGE,
-        JWT_EMAIL_SECRET: process.env.JWT_EMAIL_SECRET,
+        secret: process.env.JWT_SECRET,
+        maxAge: process.env.JWT_MAX_AGE,
+        emailSecret: process.env.JWT_EMAIL_SECRET,
     },
     google: {
         clientID: process.env.GOOGLE_CLIENT_ID,
@@ -25,5 +25,11 @@ module.exports = {
         user: process.env.EMAIL_USER,
         password: process.env.EMAIL_PASSWORD,
         service: process.env.EMAIL_SERVICE,
+    },
+    client: {
+        url: process.env.CLIENT_URL,
+        resetUrl: process.env.CLIENT_RESET_URL,
+        oauthRedirectUrl: process.env.CLIENT_OAUTH_REDIRECT_URL,
+        confirmUrl: process.env.CLIENT_CONFIRM_URL,
     },
 };

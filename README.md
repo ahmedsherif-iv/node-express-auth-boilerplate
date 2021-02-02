@@ -67,6 +67,12 @@ FACEBOOK_APP_SECRET='your facebook app secret'
 EMAIL_USER = 'your email for sending emails to your users'
 EMAIL_PASSWORD = 'your email password'
 EMAIL_SERVICE= 'email service name'
+
+# Client url
+CLIENT_URL='https://localhost:3000/' #example 
+CLIENT_RESET_URL='client url for reset password'
+CLIENT_OAUTH_REDIRECT_URL='client url for oauth redirect'
+CLIENT_CONFIRM_URL='client url for confirming email address'
 ```
 
 ## Project Structure

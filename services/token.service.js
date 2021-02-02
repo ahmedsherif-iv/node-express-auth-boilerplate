@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 
 
-const maxAge = config.jwt.JWT_MAX_AGE || 365 * 24 * 60 * 60; //3 * 24 * 60 * 60;
-const jwtSecret = config.jwt.JWT_SECRET;
+const maxAge = config.jwt.maxAge || 365 * 24 * 60 * 60; //3 * 24 * 60 * 60;
+const jwtSecret = config.jwt.secret;
 
 
 // create json web token

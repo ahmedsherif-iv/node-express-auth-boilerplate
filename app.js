@@ -33,7 +33,7 @@ app.options('*', cors());
 
 // limit repeated failed requests to auth endpoints
 if (process.env.NODE_ENV === 'production') {
-    app.use('/api/auth', authLimiter);
+    app.use('/api/auth', rateLimiter.authLimiter);
 }
 else {
     app.use(morgan('dev'));
@@ -48,7 +48,7 @@ app.use(express.static('templates'));
 app.use(passport.initialize());
 
 // DB config
-const db = config.mongo.MONGO_URI;
+const db = config.mongo.url;
 mongoose.connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -59,7 +59,7 @@ mongoose.connect(db, {
 // set up routes
 app.use('/api', routes);
 
-// handle celebrate errors
+// handle celebrate errors and server errors
 app.use(validationMiddleware.handleValidationError);
 
 const PORT = config.PORT || 5000;

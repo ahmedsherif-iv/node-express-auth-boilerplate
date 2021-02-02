@@ -12,10 +12,9 @@ module.exports.registerUser = async (req, res) => {
 
         const emailToken = tokenService.createToken({ id: user.id, email: user.email }, config.jwt.JWT_EMAIL_SECRET, '6h');
 
-        const baseUrl = req.protocol + "://" + req.get("host");
-        const url = baseUrl + `/api/auth/confirmation/${emailToken}`;
+        const url = config.client.confirmUrl + emailToken;
 
-        mailerService.sendMail(user.email, 'Confirm Email', 'confirm-email', { url: url, name: user.firstName })
+        mailerService.sendMail(user.email, 'Confirm Email', 'confirm-email', { url: url, name: user.firstName });
 
         res.status(201).send({ user, token });
     } catch (error) {
@@ -37,8 +36,7 @@ module.exports.sendResetPasswordEmail = async (req, res) => {
 
         const emailToken = tokenService.createToken({ id: user.id, email: user.email }, config.jwt.JWT_EMAIL_SECRET, '1h');
 
-        const baseUrl = req.protocol + "://" + req.get("host");
-        const url = baseUrl + `/auth/password-reset/verify/${emailToken}`;
+        const url = config.client.resetUrl + emailToken;
 
         mailerService.sendMail(email, 'Reset Password', 'forgot-password-email', { url: url, name: '' });
         res.status(200).send({ message: 'success' });
@@ -53,7 +51,7 @@ module.exports.sendResetPasswordEmail = async (req, res) => {
 module.exports.resetPassword = async (req, res) => {
     try {
         const { password } = req.body;
-        const { id } = tokenService.verifyToken(req.params.token, config.jwt.JWT_EMAIL_SECRET);
+        const { id } = tokenService.verifyToken(req.params.token, config.jwt.emailSecret);
         const user = await userService.updateUserById(id, { password: password });
         res.status(200).send({ message: 'success' });
     } catch (error) {
@@ -98,5 +96,6 @@ module.exports.loginWithFacebook = passport.authenticate('facebook', {
 // @access Public
 module.exports.authThirdPartyCallback = (req, res) => {
     const token = tokenService.createToken({ id: req.user.id, email: req.user.email });
-    res.send({ user: req.user, token });
+    const url = config.client.oauthRedirectUrl + '?token=' + token;
+    res.redirect(url);
 }
