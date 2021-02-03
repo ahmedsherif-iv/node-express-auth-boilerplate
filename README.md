@@ -126,8 +126,8 @@ List of available routes:
 `GET /api/users/:id` - Get a user by id (requires admin access)\
 `PUT /api/users/:id` - Update a user (requires admin access)\
 `DELETE /api/users/:id` - Delete a user (requires admin access)\
-`GET /api/profile` - Get profile data\
-`PUT /api/profile` - Get update profile data\
+`GET /api/users/profile` - Get profile data\
+`PUT /api/users/profile` - Get update profile data\
 `GET /api/users/get-activation-email` - Resend confirmation email\
 `GET /api/users/confirmation/:token` - Confirm user's email
 
