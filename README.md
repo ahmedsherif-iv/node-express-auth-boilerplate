@@ -129,7 +129,7 @@ List of available routes:
 `GET /api/profile` - Get profile data\
 `PUT /api/profile` - Get update profile data\
 `GET /api/users/get-activation-email` - Resend confirmation email\
-`GET /api/users/confirmation/:token` - Confirm user's email\
+`GET /api/users/confirmation/:token` - Confirm user's email
 
 
 ## Mailer Service
