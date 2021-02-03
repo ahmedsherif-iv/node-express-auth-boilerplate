@@ -116,7 +116,7 @@ List of available routes:
 `POST /api/auth/password-reset/get-code` - Reset password of user\
 `POST /api/auth/password-reset/verify` - Verify and save new password of user\
 `GET /api/auth/google` - Login with google\
-`POST /v1/auth/facebook` - Login with facebook\
+`POST /api/auth/facebook` - Login with facebook\
 `GET /api/auth/google/callback` - Callback route for google auth to redirect to\
 `GET /api/auth/facebook/callback` - Callback route for facebook auth to redirect to
 
