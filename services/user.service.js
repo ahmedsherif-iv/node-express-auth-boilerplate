@@ -41,6 +41,9 @@ const updateUserById = async (id, userData) => {
         const salt = await bcrypt.genSalt();
         userData.password = await bcrypt.hash(userData.password, salt);
     }
+    if (userData.email && (await User.isEmailTaken(userData.email, id))) {
+        throw new Error('email is already taken');
+    }
     const user = await User.findByIdAndUpdate(id, userData);
     if (user) {
         return user;
